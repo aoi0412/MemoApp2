@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { TextInput } from "react-native-paper";
-import { MyFab } from "../conp/MyFab";
+import { TextInput, FAB } from "react-native-paper";
 import DateTimePicker from "@react-native-community/datetimepicker";
+import { Alert } from "react-native";
 
 export default function Home(props) {
   const { navigation } = props;
@@ -13,7 +13,13 @@ export default function Home(props) {
     setDate(currentDate);
   };
 
-  useEffect(() => {});
+  function handlePress() {
+    navigation.reset({
+      index: 0,
+      routes: [{ name: "MemoList" }],
+    });
+  }
+
   return (
     <React.Fragment>
       <TextInput
@@ -38,7 +44,11 @@ export default function Home(props) {
         disabled={true}
         style={{ height: 100, width: 260, right: 0 }}
       />
-      <MyFab nav={navigation} location={"MemoList"} nowLocation={"Home"} />
+      <FAB
+        icon="check"
+        onPress={handlePress}
+        style={{ position: "absolute", margin: 16, right: 12, top: 230 }}
+      />
     </React.Fragment>
   );
 }

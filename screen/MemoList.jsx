@@ -1,12 +1,22 @@
-import React from "react";
-import { View, Text, StyleSheet } from "react-native";
-import { MyFab } from "../conp/MyFab";
+import React, { useEffect, useState } from "react";
+import { FAB } from "react-native-paper";
+import { Alert } from "react-native";
 
 export default function MemoList(props) {
   const { navigation } = props;
+  const [memos, setMemos] = useState([]);
+
   return (
     <React.Fragment>
-      <MyFab nav={navigation} location={"Home"} nowLocation={"MemoList"} />
+      <FAB
+        icon="plus"
+        label="Create New Memo"
+        uppercase={false}
+        onPress={() => {
+          navigation.navigate("Home");
+        }}
+        style={{ position: "absolute", margin: 16, bottom: 30, alignSelf: "center" }}
+      />
     </React.Fragment>
   );
 }
