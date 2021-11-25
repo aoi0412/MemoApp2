@@ -4,7 +4,6 @@ import { Card, Menu, Divider, Title, TextInput, IconButton } from "react-native-
 export default function Memo() {
   const [menuVisible, setMenuVisible] = useState(false);
   const [text, setText] = useState("aiueo");
-  const [mode, setMode] = useState("flat");
   const input = React.createRef();
   return (
     <React.Fragment>
@@ -26,7 +25,6 @@ export default function Memo() {
                 mode="outlined"
                 dense={false}
                 multiline={true}
-                autoFocus={true}
                 value={text}
                 ref={input}
                 onChangeText={(text) => {

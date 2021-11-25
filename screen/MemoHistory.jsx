@@ -1,8 +1,19 @@
 import React from "react";
 import { Card, TextInput, Title } from "react-native-paper";
-
+import firebase from "firebase/compat";
 export default function MemoHistory() {
   const text = "aiueo";
+
+  React.useEffect(() => {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (!user) {
+        firebase.auth().signInAnonymously();
+        // console.log("not sign in:" + user.uid);
+      } else {
+        console.log("sign in:" + user.uid);
+      }
+    });
+  });
   return (
     <React.Fragment>
       <Card>
