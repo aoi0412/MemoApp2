@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { TextInput, FAB } from "react-native-paper";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import firebase from "firebase/compat";

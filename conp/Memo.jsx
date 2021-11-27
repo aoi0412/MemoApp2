@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { Card, Title, TextInput, Text } from "react-native-paper";
-import firebase from "firebase/compat";
+import React, { useState } from "react";
+import { Card, Title, Text } from "react-native-paper";
 import { View, FlatList, Alert } from "react-native";
 import { dateToString } from "../utils";
 import { shape, string, instanceOf, arrayOf } from "prop-types";
@@ -50,17 +49,6 @@ export default function Memo(props) {
             >
               {item.text}
             </Text>
-            {/* <TextInput
-              mode="flat"
-              underlineColor="rgba(0,0,0,0)"
-              activeUnderlineColor="rgba(0,0,0,0)"
-              selectionColor="black"
-              dense={false}
-              multiline
-              value={item.text}
-              onChangeText={(text) => {}}
-              style={{ width: "100%", backgroundColor: "#ffffff" }}
-            /> */}
             <Title
               style={{
                 position: "absolute",

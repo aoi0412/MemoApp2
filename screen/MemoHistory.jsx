@@ -8,7 +8,6 @@ export default function MemoHistory() {
     firebase.auth().onAuthStateChanged((user) => {
       if (!user) {
         firebase.auth().signInAnonymously();
-        // console.log("not sign in:" + user.uid);
       } else {
         console.log("sign in:" + user.uid);
       }

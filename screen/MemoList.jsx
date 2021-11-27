@@ -62,12 +62,12 @@ export default function MemoList(props) {
         <Memo memos={memos} />
         <FAB
           icon="plus"
-          // label="Create New Memo"
+          label="Create New Memo"
           uppercase={false}
           onPress={() => {
             navigation.navigate("Home");
           }}
-          style={{ position: "absolute", margin: 16, bottom: 30, right: 0 }}
+          style={{ position: "absolute", margin: 16, bottom: 30, alignSelf: "center" }}
         />
       </View>
     </TouchableWithoutFeedback>
