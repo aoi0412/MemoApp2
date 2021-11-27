@@ -6,6 +6,17 @@ export default function LogInScreen(props) {
   const { navigation } = props;
 
   useEffect(() => {
+    if (!firebase.apps.length) {
+      firebase.initializeApp({
+        apiKey: "AIzaSyC7LptGLMzEw1_3t0zIsG63RZfxTDA7yGY",
+        authDomain: "memoapp2-d7878.firebaseapp.com",
+        projectId: "memoapp2-d7878",
+        storageBucket: "memoapp2-d7878.appspot.com",
+        messagingSenderId: "278736358324",
+        appId: "1:278736358324:web:eec2038242b1873ab6c0e1",
+      });
+    }
+
     const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
       if (!user) {
         firebase

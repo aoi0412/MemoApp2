@@ -2,34 +2,16 @@ import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { DefaultTheme, Provider as PaperProvider } from "react-native-paper";
-import { firebaseConfig } from "./env";
 import firebase from "firebase/compat";
+import PushNotification from "./utils/PushNotification";
 
 import Home from "./screen/Home";
 import MemoList from "./screen/MemoList";
 import MemoEdit from "./screen/MemoEdit";
 import MemoHistory from "./screen/MemoHistory";
+import LogInScreen from "./screen/LogInScreen";
 
 const Stack = createNativeStackNavigator();
-
-if (firebase.apps.length == 0) {
-  firebase.initializeApp(firebaseConfig);
-}
-
-firebase
-  .auth()
-  .signInAnonymously()
-  .then((userCredintial) => {
-    const { user } = userCredintial;
-    console.log("loginedas:" + user.uid);
-  });
-
-firebase.auth().onAuthStateChanged((user) => {
-  if (user) {
-    let uid = user.uid;
-    console.log("あなたのIDは", uid, "です。");
-  }
-});
 
 export default function App() {
   const theme = {
@@ -43,8 +25,10 @@ export default function App() {
   };
   return (
     <PaperProvider theme={theme}>
+      <PushNotification />
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Home">
+        <Stack.Navigator initialRouteName="LogIn">
+          <Stack.Screen name="LogIn" component={LogInScreen} />
           <Stack.Screen name="Home" component={Home} options={{ title: "新しくメモを作成" }} />
           <Stack.Screen
             name="MemoList"
