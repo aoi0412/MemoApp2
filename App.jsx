@@ -7,6 +7,7 @@ import firebase from "firebase/compat";
 
 import Home from "./screen/Home";
 import MemoList from "./screen/MemoList";
+import MemoEdit from "./screen/MemoEdit";
 import MemoHistory from "./screen/MemoHistory";
 
 const Stack = createNativeStackNavigator();
@@ -52,6 +53,7 @@ export default function App() {
               title: "メモリスト",
             }}
           />
+          <Stack.Screen name="MemoEdit" component={MemoEdit} options={{ title: "メモを編集" }} />
           <Stack.Screen name="History" component={MemoHistory} options={{ title: "メモ履歴" }} />
         </Stack.Navigator>
       </NavigationContainer>

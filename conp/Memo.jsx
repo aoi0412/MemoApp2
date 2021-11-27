@@ -1,70 +1,94 @@
-import React, { useState } from "react";
-import { Card, Menu, Divider, Title, TextInput, IconButton } from "react-native-paper";
+import React, { useState, useEffect } from "react";
+import { Card, Title, TextInput, Text } from "react-native-paper";
+import firebase from "firebase/compat";
+import { View, FlatList, Alert } from "react-native";
+import { dateToString } from "../utils";
+import { shape, string, instanceOf, arrayOf } from "prop-types";
+import { useNavigation } from "@react-navigation/native";
 
-export default function Memo() {
-  const [menuVisible, setMenuVisible] = useState(false);
-  const [text, setText] = useState("aiueo");
-  const input = React.createRef();
-  return (
-    <React.Fragment>
-      <Menu
-        visible={menuVisible}
-        onDismiss={() => {
-          setMenuVisible(false);
-        }}
-        style={{ flexDirection: "row-reverse" }}
-        anchor={
-          <Card>
-            <Card.Content
+export default function Memo(props) {
+  const { memos } = props;
+  const navigation = useNavigation();
+  const [text, setText] = useState(null);
+
+  function renderItem({ item }) {
+    if (text == null) {
+      setText(item.text);
+    }
+    return (
+      <React.Fragment>
+        <Card
+          onPress={() => {
+            console.log(item.alertAt);
+            navigation.navigate("MemoEdit", {
+              id: item.id,
+              text: item.text,
+              date: item.date,
+            });
+          }}
+          style={{ backgroundColor: "rgba(0,0,0,0)" }}
+        >
+          <Card.Content
+            style={{
+              position: "relative",
+              paddingHorizontal: 0,
+              paddingBottom: 30,
+              paddingTop: 7,
+              borderWidth: 1,
+              borderRadius: 10,
+              backgroundColor: "#ffffff",
+              marginBottom: 10,
+            }}
+          >
+            <Text
               style={{
-                position: "relative",
-                paddingBottom: 48,
+                width: "100%",
+                backgroundColor: "#ffffff",
+                paddingHorizontal: 20,
+                paddingVertical: 12,
               }}
             >
-              <TextInput
-                mode="outlined"
-                dense={false}
-                multiline={true}
-                value={text}
-                ref={input}
-                onChangeText={(text) => {
-                  setText(text);
-                }}
-                style={{ backgroundColor: "#ffffff", width: "80%" }}
-              />
-              <Title
-                style={{
-                  position: "absolute",
-                  right: 12,
-                  bottom: 8,
-                  fontSize: 12,
-                }}
-              >
-                alertDateに通知予定
-              </Title>
-              <IconButton
-                icon="dots-vertical"
-                style={{ position: "absolute", right: 12, top: 12 }}
-                onPress={() => {
-                  setMenuVisible(true);
-                }}
-              />
-            </Card.Content>
-          </Card>
-        }
-      >
-        <Menu.Item onPress={() => {}} title="削除" icon="delete" />
-        <Menu.Item
-          onPress={() => {
-            setMode("outlined");
-            setMenuVisible(false);
-          }}
-          title="編集"
-          icon="pencil"
-        />
-        <Divider />
-        <Menu.Item onPress={() => {}} title="通知時刻変更" icon="clock" />
-      </Menu>
-    </React.Fragment>
+              {item.text}
+            </Text>
+            {/* <TextInput
+              mode="flat"
+              underlineColor="rgba(0,0,0,0)"
+              activeUnderlineColor="rgba(0,0,0,0)"
+              selectionColor="black"
+              dense={false}
+              multiline
+              value={item.text}
+              onChangeText={(text) => {}}
+              style={{ width: "100%", backgroundColor: "#ffffff" }}
+            /> */}
+            <Title
+              style={{
+                position: "absolute",
+                right: 12,
+                bottom: 0,
+                fontSize: 12,
+              }}
+            >
+              {dateToString(item.date)}に通知予定
+            </Title>
+          </Card.Content>
+        </Card>
+      </React.Fragment>
+    );
+  }
+  return (
+    <View style={{ height: "100%" }}>
+      <FlatList data={memos} renderItem={renderItem} keyExtractor={(item) => item.id} />
+    </View>
   );
 }
+
+Memo.prototypes = {
+  memos: arrayOf(
+    shape({
+      id: string,
+      text: string,
+      alertAt: instanceOf(Date),
+    })
+  ).isRequired,
+};
